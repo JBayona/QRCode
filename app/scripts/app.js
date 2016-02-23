@@ -19,6 +19,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'camera',
+    'monospaced.qrcode',
+    'qrScanner'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -29,8 +31,8 @@ angular
       })
       .when('/control', {
         templateUrl: 'views/control.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
+        controller: 'MainCtrl',
+        controllerAs: 'main'
       })
       .otherwise({
         redirectTo: '/'

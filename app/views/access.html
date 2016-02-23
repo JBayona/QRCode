@@ -26,7 +26,7 @@
 					    <div class="form-group">
 					      <label for="password" class="col-sm-2">Course</label>
 					      <div class="col-sm-10">
-					        <input type="text" class="form-control" id="password" name="password" placeholder="Password" ng-model="credentials.course" required>
+					        <input type="text" class="form-control" id="course" name="course" placeholder="Course" ng-model="credentials.course" required>
 					      </div>
 					    </div>
 					    <div class="row" ng-show="loginForm.password.$invalid && loginForm.user.$dirty && submitted">
@@ -80,6 +80,10 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-6">
+				<div class="row text-center" ng-if="idData">
+					<h2>QR Code</h2>
+					<qrcode version="{{version}}" error-correction-level="{{level}}" size="{{size}}" data="{{idData}}" download></qrcode>
+				</div>
 			</div>
 		</div>
 	</div>
