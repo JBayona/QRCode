@@ -10,10 +10,11 @@
 angular.module('accessControlApp')
   .controller('MainCtrl', ['$scope', 'QRCode', '$timeout', function ($scope, QRCode, $timeout) {
 
-  	$scope.version = 10;
-  	$scope.size = 150;
+  	$scope.version = 4;
+  	$scope.size = 274;
   	$scope.level = 'M';
-
+    $scope.query = {};
+    $scope.checkedIn = [];
 
   	$scope.getCode = function(){
   		QRCode.sendItem($scope.credentials.name, $scope.credentials.course, $scope.vm.picture)
@@ -31,15 +32,36 @@ angular.module('accessControlApp')
   		});
   	}
 
-  	/*$scope.getGuest = function(){
-  		QRCode.getItem()
-  	}*/
+  	$scope.getGuest = function(objectId){
+  		QRCode.getItem(objectId).then(function(response){
+          console.log(response);
+          $scope.query = response.results[0];
+          $scope.confirmation=true,
+          $timeout(function(){$scope.confirmation=false},3000);
+      });
+  	};
+
+    $scope.checkIn = function(){
+      $scope.query.checkInTime = new Date();
+      $scope.query.picture = $scope.vm.picture;
+      $scope.checkedIn.push($scope.query);
+      $scope.query = {}; //Limpiamos el query
+    };
+
+    $scope.checkOut = function(data){
+      data.checkOutTime = new Date();
+    }
 
   	 $scope.onSuccess = function(data) {
         console.log(data);
+        $scope.getGuest(data); //Aquí vamos a leer el código QR que generamos
     };
 
     $scope.onError = function(error) {
+        console.log(error);
+    };
+
+    $scope.onVideoError = function(error) {
         console.log(error);
     };
     

@@ -1,4 +1,10 @@
 <div class="well bs-component">
+	<div class="row" ng-show="confirmation"> 
+		<div class="alert alert-dismissable alert-success"> 
+			<button type="button" class="close" data-dismiss="alert">×</button> 
+			<p>QR Code data found!</p> 
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="col-sm-6 col-md-6">
@@ -14,49 +20,30 @@
 					      <!--<ng-md-icon icon="person" style="fill: lightgreen" size="32">-->
 					      <label for="user" class="col-sm-2">User Id</label>
 					      <div class="col-sm-10">
-					        <input type="text" class="form-control" id="userId" name="userId" placeholder="User ID" ng-model="credentials.id" required minlength="2">
+					        <input type="text" class="form-control" id="userId" name="userId" placeholder="User ID" ng-model="query.objectId" minlength="2" disabled>
 					      </div>
 					    </div>
 					    <div class="form-group" ng-class="{'has-error':(loginForm.user.$invalid && loginForm.user.$dirty && submitted)}">
 					      <!--<ng-md-icon icon="person" style="fill: lightgreen" size="32">-->
 					      <label for="user" class="col-sm-2">User</label>
 					      <div class="col-sm-10">
-					        <input type="text" class="form-control" id="user" name="user" placeholder="User" ng-model="credentials.name" required minlength="2">
+					        <input type="text" class="form-control" id="user" name="user" placeholder="User" ng-model="query.name"  minlength="2" disabled>
 					      </div>
 					    </div>
 					    <div class="form-group">
 					      <label for="password" class="col-sm-2">Course</label>
 					      <div class="col-sm-10">
-					        <input type="text" class="form-control" id="course" name="couse" placeholder="Course" ng-model="credentials.course" required>
+					        <input type="text" class="form-control" id="course" name="couse" placeholder="Course" ng-model="query.course" disabled>
 					      </div>
 					    </div>
 					    <div class="form-group">
-					      <div class=" col-sm-6">
-					        <!--<div id="myCam"></div>
-									<input type=button value="Take Picture" onClick="takePicture()">-->
-									<!--<ng-camera
-										    capture-message="GO!"
-										    countdown="3"
-										    output-height="160"
-										    output-width="213"
-										    viewer-height="160"
-										    viewer-width="213"
-										    image-format="jpeg"
-										    jpeg-quality="100"
-										    action-message="Take picture"
-										    snapshot="vm.picture"
-										    flash-fallback-url="/vendors/webcamjs/webcam.swf"
-										></ng-camera>-->
-					      </div>
-					      <div class="col-sm-6">
-					      	<!--<div id="pic"></div>-->
-					      	<b></b>
-					      	<img ng-if="vm.picture" ng-src="{{vm.picture}}" alt="webcam picture">
+					      <div class="col-sm-12">
+					        <img ng-if="query.image" ng-src="{{query.image}}" alt="webcam picture">
 					      </div>
 					    </div>
 					    <div class="form-group">
 					      <div class=" col-sm-10">
-					        <button type="submit" class="btn btn-primary btn-raised" ng-click="getCode()" ng-disabled = "!credentials.name || !credentials.course">Get Code</button>
+					        <button type="submit" class="btn btn-primary btn-raised" ng-click="checkIn()" ng-disabled = "!query.objectId || !query.name || !query.course || !query.image || !vm.picture">Check In</button>
 					      </div>
 					    </div>
 		  			</fieldset>
@@ -64,11 +51,76 @@
 				</div>
 			</div>
 			<div class="col-sm-6 col-md-6">
-				<div class="row text-center">
+				<div class="row" ng-hide="query.objectId">
+					<div class="col-sm-12 text-center">
+						<h3>QR Code Scanner</h3>
+						<qr-scanner width="400" height="300" ng-success="onSuccess(data)" ng-error="onError(error)" />
+					</div>
+				</div>
+				<div class="row" ng-show="query.objectId">
 					<h3>Profile Picture</h3>
-					<qr-scanner width="400" height="300" ng-success="onSuccess(data)" ng-error="onError(error)" />
+					<div class="col-sm-12" ng-hide="vm.picture">
+						<ng-camera
+						    output-height="160"
+						    output-width="213"
+						    viewer-height="160"
+						    viewer-width="213"
+						    image-format="jpeg"
+						    jpeg-quality="100"
+						    action-message="Take picture"
+						    snapshot="vm.picture"
+						    flash-fallback-url="/vendors/webcamjs/webcam.swf"
+						></ng-camera>
+					</div>
+					<img ng-if="vm.picture" ng-src="{{vm.picture}}" alt="webcam picture">
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="row" ng-if="checkedIn.length > 0">
+		<h3>Guest</h3>
+	</div>
+	<div class="row" ng-if="checkedIn.length > 0">
+		 <div class="table-responsive">
+		 	<table class="table">
+			    <thead>
+			      <tr>
+			        <th>Name</th>
+			        <th>Course</th>
+			        <th>Check In</th>
+			        <th>Check Out</th>
+			        <th>Profile Picture</th>
+			        <th>Id Picture</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			      <tr ng-repeat = "item in checkedIn">
+			        <td>{{ item.name }}</td>
+			        <td>{{ item.course }}</td>
+			        <td>{{ item.checkInTime }}</td>
+			        <td>
+			        	<button type="button" clas="btn btn-primary" ng-click="checkOut(item)" ng-hide="item.checkOutTime">
+			        		Check out
+			        	</button>
+			        	<span ng-show="item.checkOutTime"> {{item.checkOutTime}} </span>
+			        </td>
+			        <td>
+			        	<span ng-hide="item.showPicture"> 
+			        	 	<a href="javascript:void(0)" ng-click="item.showPicture = true">show picture</a>
+			        	</span>
+ 						<span ng-show="item.showPicture"> <img ng-if="item.picture" ng-src="{{item.picture}}" alt="webcam picture"> </span> 
+			        </td>
+			        <td>
+			        	<span ng-hide="item.showID">
+			        		<a href="javascript:void(0)" ng-click="item.showID = true">show ID</a> 
+			        	</span>
+			        	<span ng-show="item.showID">
+ 							<img ng-if="item.image" ng-src="{{item.image}}" alt="webcam picture"> 
+ 						</span>
+ 					</td>
+			      </tr>
+			    </tbody>
+		  </table>
+		 </div>
 	</div>
 </div>

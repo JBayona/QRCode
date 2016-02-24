@@ -26,7 +26,7 @@ angular.module('accessControlApp')
     	};
 
     	this.getItem = function(objectId){
-    		return Proxy.getCall('https://api.parse.com/1/classes/access?where={"objectId:"'+ objectId + '"}');
+    		return Proxy.getCall('https://api.parse.com/1/classes/access?where={"objectId":"'+objectId+'"}');
     	};
 
   }]);

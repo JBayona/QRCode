@@ -48,24 +48,21 @@
 					    </div>
 					    <div class="form-group">
 					      <div class=" col-sm-6">
-					        <!--<div id="myCam"></div>
-									<input type=button value="Take Picture" onClick="takePicture()">-->
-									<ng-camera
-										    capture-message="GO!"
-										    countdown="3"
-										    output-height="160"
-										    output-width="213"
-										    viewer-height="160"
-										    viewer-width="213"
-										    image-format="jpeg"
-										    jpeg-quality="100"
-										    action-message="Take picture"
-										    snapshot="vm.picture"
-										    flash-fallback-url="/vendors/webcamjs/webcam.swf"
-										></ng-camera>
+							<ng-camera
+								    capture-message="GO!"
+								    countdown="3"
+								    output-height="160"
+								    output-width="213"
+								    viewer-height="160"
+								    viewer-width="213"
+								    image-format="jpeg"
+								    jpeg-quality="100"
+								    action-message="Take picture"
+								    snapshot="vm.picture"
+								    flash-fallback-url="/vendors/webcamjs/webcam.swf"
+								></ng-camera>
 					      </div>
 					      <div class="col-sm-6">
-					      	<!--<div id="pic"></div>-->
 					      	<b></b>
 					      	<img ng-if="vm.picture" ng-src="{{vm.picture}}" alt="webcam picture">
 					      </div>
