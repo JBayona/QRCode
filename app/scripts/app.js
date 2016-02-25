@@ -29,11 +29,11 @@ angular
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
-      .when('/control', {
+      /*.when('/control', {
         templateUrl: 'views/control.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
-      })
+      })*/
       .otherwise({
         redirectTo: '/'
       });
@@ -41,9 +41,10 @@ angular
       $rootScope.$on('$routeChangeStart', function (event, next) {
         $rootScope.activeMenu = $location.url();
         if($location.url() === '/'){
-          $rootScope.activeMenu = '/main'
+          $rootScope.activeMenu = '/main';
+          //location.reload();
         }else if($location.url() === '/control'){
-          $rootScope.activeMenu = '/control'
+          $rootScope.activeMenu = '/control';
         }
       });
   }]);

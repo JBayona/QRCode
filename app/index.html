@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="accessControlApp">
+  <body ng-app="accessControlApp" ng-cloak>
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -40,7 +40,7 @@
 
             <ul class="nav navbar-nav">
               <li ng-class="{'active':activeMenu === '/main'}"><a href="#/">Registration</a></li>
-              <li ng-class="{'active':activeMenu === '/control'}"><a ng-href="#/control">Access Control</a></li>
+              <li ng-class="{'active':activeMenu === '/control'}"><a ng-href="/accessCode#/">Access Control</a></li>
             </ul>
           </div>
         </div>
@@ -100,6 +100,7 @@
 
 
     <script src="scripts/qrcode/jsqrcode-combined.min.js"></script>
+    <script src="scripts/controllers/control.js"></script>
     <!-- endbuild -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.3.0/js/ripples.min.js"></script> <!--This is add manually -->
