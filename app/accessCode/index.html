@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="accessControlApp" ng-controller="MainCtrl"> 
+  <body ng-app="accessControlApp" ng-controller="MainCtrl" ng-cloak> 
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -107,29 +107,35 @@
 						<qr-scanner width="400" height="300" ng-success="onSuccess(data)" ng-error="onError(error)" />
 					</div>
 				</div>
-				<div class="row" ng-show="query.objectId"> <!-- ng-show="query.objectId" -->
-					<h3>Profile Picture</h3>
-					<div class="col-sm-12" ng-hide="vm.picture" > <!-- ng-hide="vm.picture" -->
-						<ng-camera
-								    capture-message="GO!"
-								    output-height="160"
-								    output-width="213"
-								    viewer-height="160"
-								    viewer-width="213"
-								    image-format="jpeg"
-								    jpeg-quality="100"
-								    action-message="Take picture"
-								    snapshot="vm.picture"
-								    flash-fallback-url="/vendors/webcamjs/webcam.swf"
-								></ng-camera>
+				<div class="row" ng-show="query.objectId">
+					<div class="col-sm-offset-3 col-sm-6">
+						<div class="col-sm-12"><h3>Profile Picture</h3></div>
 					</div>
-					<img ng-if="vm.picture" ng-src="{{vm.picture}}" alt="webcam picture">
+					<div class="col-sm-offset-3 col-sm-6" ng-hide="vm.picture">
+							<ng-camera
+									    capture-message="GO!"
+									    output-height="160"
+									    output-width="213"
+									    viewer-height="160"
+									    viewer-width="213"
+									    image-format="jpeg"
+									    jpeg-quality="100"
+									    action-message="Take picture"
+									    snapshot="vm.picture"
+									    flash-fallback-url="/vendors/webcamjs/webcam.swf"
+									></ng-camera>
+					</div>
+					<div class="col-sm-offset-3 col-sm-6">
+						<img ng-if="vm.picture" ng-src="{{vm.picture}}" alt="webcam picture">
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="row" ng-if="checkedIn.length > 0">
-		<h3>Guest</h3>
+		<div class="col-sm-12">
+			<h3>Guest</h3>
+		</div>
 	</div>
 	<div class="row" ng-if="checkedIn.length > 0">
 		 <div class="table-responsive">
@@ -153,13 +159,13 @@
 			        	<span ng-if="item.course">{{ item.course }}</span>
 			        </td>
 			        <td>
-			        	<span ng-if="item.checkInTime">{{ item.checkInTime }}</span>
+			        	<span ng-if="item.checkInTimeView">{{ item.checkInTimeView }}</span>
 			        </td>
 			        <td>
 			        	<button type="button" clas="btn btn-primary" ng-click="checkOut(item)" ng-hide="item.checkOutTime">
 			        		Check out
 			        	</button>
-			        	<span ng-show="item.checkOutTime"> {{item.checkOutTime}} </span>
+			        	<span ng-show="item.checkOutTime"> {{item.checkOutTimeView}} </span>
 			        </td>
 			        <td>
 			        	<span ng-hide="item.showPicture"> 

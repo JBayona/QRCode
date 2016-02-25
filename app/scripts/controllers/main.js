@@ -46,6 +46,7 @@ angular.module('accessControlApp')
       var profilePic = $scope.vm.picture.split("base64,")[1];
       $scope.query.picture = $scope.vm.picture;
       $scope.query.checkInTime = moment().utc().add(-6,'hours');
+      $scope.query.checkInTimeView = moment().utc().add(-6,'hours').format('MMMM Do YYYY, h:mm:ss a');
       $scope.checkedIn.push($scope.query);
       QRCode.sendPicture($scope.query.objectId+"Profile", profilePic).then(function(response){
 			 //En response.url obtenemos la url donde se almacena la imagen
@@ -57,6 +58,7 @@ angular.module('accessControlApp')
 
     $scope.checkOut = function(data){
       data.checkOutTime = moment().utc().add(-6,'hours');
+      data.checkOutTimeView = moment().utc().add(-6,'hours').format('MMMM Do YYYY, h:mm:ss a');
       QRCode.sendCheckInfo($scope.query.objectId, null, data.checkOutTime, null).then(function(response){
 		    console.log("Success");
 		    $scope.query = {}; //Limpiamos el query
