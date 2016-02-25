@@ -54,12 +54,12 @@
 				<div class="row" ng-hide="query.objectId">
 					<div class="col-sm-12 text-center">
 						<h3>QR Code Scanner</h3>
-						<qr-scanner width="400" height="300" ng-success="onSuccess(data)" ng-error="onError(error)" />
+						<!--<qr-scanner width="400" height="300" ng-success="onSuccess(data)" ng-error="onError(error)" />-->
 					</div>
 				</div>
-				<div class="row" ng-show="query.objectId">
+				<div class="row"> <!-- ng-show="query.objectId" -->
 					<h3>Profile Picture</h3>
-					<div class="col-sm-12" ng-hide="vm.picture">
+					<div class="col-sm-12"> <!-- ng-hide="vm.picture" -->
 						<ng-camera
 						    output-height="160"
 						    output-width="213"
@@ -95,9 +95,15 @@
 			    </thead>
 			    <tbody>
 			      <tr ng-repeat = "item in checkedIn">
-			        <td>{{ item.name }}</td>
-			        <td>{{ item.course }}</td>
-			        <td>{{ item.checkInTime }}</td>
+			        <td>
+			        	<span ng-if="item.name">{{ item.name }}</span>
+			        </td>
+			        <td>
+			        	<span ng-if="item.course">{{ item.course }}</span>
+			        </td>
+			        <td>
+			        	<span ng-if="item.checkInTime">{{ item.checkInTime }}</span>
+			        </td>
 			        <td>
 			        	<button type="button" clas="btn btn-primary" ng-click="checkOut(item)" ng-hide="item.checkOutTime">
 			        		Check out

@@ -33,14 +33,14 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#/">accessControl</a>
+            <a class="navbar-brand" href="#/">Access QR Code</a>
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Registration</a></li>
-              <li><a ng-href="#/control">Access Control</a></li>
+              <li ng-class="{'active':activeMenu === '/main'}"><a href="#/">Registration</a></li>
+              <li ng-class="{'active':activeMenu === '/control'}"><a ng-href="#/control">Access Control</a></li>
             </ul>
           </div>
         </div>
@@ -87,6 +87,7 @@
     <script src="bower_components/qrcode-generator/js/qrcode.js"></script>
     <script src="bower_components/angular-qrcode/angular-qrcode.js"></script>
     <script src="bower_components/angular-qr-scanner/qr-scanner.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

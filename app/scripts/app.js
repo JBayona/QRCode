@@ -37,4 +37,13 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  }).run(['$rootScope','$location', function($rootScope, $location){
+      $rootScope.$on('$routeChangeStart', function (event, next) {
+        $rootScope.activeMenu = $location.url();
+        if($location.url() === '/'){
+          $rootScope.activeMenu = '/main'
+        }else if($location.url() === '/control'){
+          $rootScope.activeMenu = '/control'
+        }
+      });
+  }]);

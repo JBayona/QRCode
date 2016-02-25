@@ -29,4 +29,18 @@ angular.module('accessControlApp')
     		return Proxy.getCall('https://api.parse.com/1/classes/access?where={"objectId":"'+objectId+'"}');
     	};
 
+    	this.sendCheckInfo = function(objectId, checkInDate, checkOutDate, profilePic){
+    		console.log("objectId = " + objectId);
+    		var params = {};
+    		if(checkOutDate){
+    			checkOutDate = {__type:'Date',iso: moment(moment(checkOutDate)).utc().toISOString()};
+    			params = {check_out:checkOutDate};
+    		}
+    		if(checkInDate){
+    			checkInDate = {__type:'Date',iso: moment(moment(checkInDate)).utc().toISOString()};
+    			params = {check_in:checkInDate, profile_picture: profilePic};
+    		}
+    		return Proxy.putCall(params,'https://api.parse.com/1/classes/access/' + objectId);
+    	}
+
   }]);
