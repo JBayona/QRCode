@@ -14,7 +14,7 @@
 					      <!--<ng-md-icon icon="person" style="fill: lightgreen" size="32">-->
 					      <label for="user" class="col-sm-2">User</label>
 					      <div class="col-sm-10">
-					        <input type="text" class="form-control" id="user" name="user" placeholder="User" ng-model="credentials.name" required minlength="2">
+					        <input type="text" class="form-control" id="user" name="user" placeholder="User" ng-model="credentials.name" required minlength="2" autocomplete="off">
 					      </div>
 					    </div>
 					    <div class="row" ng-show="loginForm.user.$invalid && loginForm.user.$dirty && submitted">
@@ -26,7 +26,7 @@
 					    <div class="form-group">
 					      <label for="password" class="col-sm-2">Course</label>
 					      <div class="col-sm-10">
-					        <input type="text" class="form-control" id="course" name="course" placeholder="Course" ng-model="credentials.course" required>
+					        <input type="text" class="form-control" id="course" name="course" placeholder="Course" ng-model="credentials.course" required autocomplete="off">
 					      </div>
 					    </div>
 					    <div class="row" ng-show="loginForm.password.$invalid && loginForm.user.$dirty && submitted">
@@ -50,7 +50,7 @@
 					      <div class=" col-sm-6">
 							<ng-camera
 								    capture-message="GO!"
-								    countdown="3"
+								    countdown="5"
 								    output-height="160"
 								    output-width="213"
 								    viewer-height="160"
